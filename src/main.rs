@@ -10,7 +10,6 @@ mod cmd;
 fn main() {
     pretty_env_logger::init();
 
-
     let app = App::new(crate_name!())
         .about(crate_description!())
         .author(crate_authors!())
