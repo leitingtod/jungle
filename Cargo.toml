@@ -1,5 +1,5 @@
 [package]
-name = "bookee"
+name = "jungle"
 version = "0.1.0"
 authors = ["leiting <leitingtod@gmail.com>"]
 edition = "2018"
@@ -8,6 +8,7 @@ edition = "2018"
 
 [dependencies]
 walkdir = "2.0"
+open = "1.1"
 handlebars = { version = "2.0", default-features = false, features = ["no_dir_source"] }
 pulldown-cmark = "0.5"
 

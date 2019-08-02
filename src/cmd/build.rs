@@ -1,9 +1,9 @@
 use clap::{App, ArgMatches, SubCommand};
 
-use bookee::book::*;
-use bookee::errors::*;
+use jungle::book::*;
+use jungle::errors::*;
 
-use crate::cmd::get_root_dir;
+use crate::cmd::{get_root_dir, open};
 
 pub fn make_subcommand<'a, 'b>() -> App<'a, 'b> {
     SubCommand::with_name("build")
@@ -13,6 +13,7 @@ pub fn make_subcommand<'a, 'b>() -> App<'a, 'b> {
             "[dir] 'Root directory for the book{n}\
              (Defaults to the Current Directory when omitted)'",
         )
+        .arg_from_usage("-o, --open 'Opens the compiled book in a web browser'")
 }
 
 pub fn execute(args: &ArgMatches) -> Result<()> {
@@ -21,6 +22,10 @@ pub fn execute(args: &ArgMatches) -> Result<()> {
 
     if get_books_dir(&root).exists() {
         build(root.as_path())?;
+
+        if args.is_present("open") {
+            open(get_build_dir(&root).join("index.html"));
+        }
     }
 
     Ok(())

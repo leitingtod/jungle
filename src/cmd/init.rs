@@ -1,7 +1,7 @@
 use clap::{App, ArgMatches, SubCommand};
 
-use bookee::book::*;
-use bookee::errors::*;
+use jungle::book::*;
+use jungle::errors::*;
 use crate::cmd::get_root_dir;
 
 pub fn make_subcommand<'a, 'b>() -> App<'a, 'b> {

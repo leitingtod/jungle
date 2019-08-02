@@ -4,7 +4,9 @@ extern crate clap;
 extern crate log;
 
 use clap::{App, AppSettings};
-use bookee::utils;
+
+use jungle::utils;
+
 mod cmd;
 
 fn main() {
@@ -13,7 +15,7 @@ fn main() {
     let app = App::new(crate_name!())
         .about(crate_description!())
         .author(crate_authors!())
-        .version(bookee::VERSION)
+        .version(jungle::VERSION)
         .setting(AppSettings::GlobalVersion)
         .setting(AppSettings::ArgRequiredElseHelp)
         .setting(AppSettings::ColoredHelp)

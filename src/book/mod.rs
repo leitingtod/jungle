@@ -6,7 +6,7 @@ use walkdir::DirEntry;
 
 use crate::errors::*;
 use crate::render::{make_book_data, render_book, render_summary, RenderContext};
-use crate::utils::remove_dir_content;
+use crate::utils::{remove_dir_content, write_file};
 
 pub use self::book::*;
 pub use self::summary::*;
@@ -63,6 +63,11 @@ pub fn init<P: AsRef<Path>>(root_dir: P) -> Result<()> {
     let src_dir = get_books_dir(&root_dir.as_ref().to_path_buf());
     if !src_dir.exists() {
         create_dir_all(src_dir.as_path())?;
+
+        debug!("Creating .gitignore");
+        let data = "build/\n.idea/\n";
+        write_file(root_dir.as_ref(),
+                   ".gitignore", data.as_bytes())?;
     }
     Ok(())
 }

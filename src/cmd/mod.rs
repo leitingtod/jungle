@@ -1,4 +1,5 @@
 use std::env;
+use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
 
 use clap::ArgMatches;
@@ -17,5 +18,11 @@ fn get_root_dir(args: &ArgMatches) -> PathBuf {
         }
     } else {
         env::current_dir().expect("Unable to determine the current directory")
+    }
+}
+
+fn open<P: AsRef<OsStr>>(path: P) {
+    if let Err(e) = open::that(path) {
+        error!("Error opening web browser: {}", e);
     }
 }

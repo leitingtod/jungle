@@ -135,9 +135,9 @@ pub fn render_markdown(text: &str) -> String {
 /// The context provided to all renderers.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct RenderContext {
-    /// Which version of `bookee` did this come from (as written in `bookee`'s
+    /// Which version of `jungle` did this come from (as written in `jungle`'s
     /// `Cargo.toml`). Useful if you know the renderer is only compatible with
-    /// certain versions of `bookee`.
+    /// certain versions of `jungle`.
     pub version: String,
     /// The book's root directory.
     pub root: PathBuf,
