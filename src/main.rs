@@ -13,7 +13,7 @@ fn main() {
     let app = App::new(crate_name!())
         .about(crate_description!())
         .author(crate_authors!())
-        .version(crate_version!())
+        .version(bookee::VERSION)
         .setting(AppSettings::GlobalVersion)
         .setting(AppSettings::ArgRequiredElseHelp)
         .setting(AppSettings::ColoredHelp)

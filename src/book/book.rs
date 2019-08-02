@@ -1,3 +1,4 @@
+use std::collections::VecDeque;
 use std::path::{Path, PathBuf};
 
 use walkdir::{DirEntry, WalkDir};
@@ -24,10 +25,14 @@ pub fn load_book<P: AsRef<Path>>(src_dir: P) -> Result<Book> {
         }
     }
 
-    let name = src_dir.as_ref().to_path_buf().to_str().unwrap().into();
+    let name = src_dir.as_ref().to_path_buf()
+        .file_stem().unwrap().to_str().unwrap().to_string();
+
+    let path = src_dir.as_ref().to_path_buf();
 
     Ok(Book {
         name,
+        root:path,
         chapters,
         ..Default::default()
     })
@@ -36,6 +41,7 @@ pub fn load_book<P: AsRef<Path>>(src_dir: P) -> Result<Book> {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 pub struct Book {
     pub name: String,
+    pub root: PathBuf,
     pub chapters: Vec<Chapter>,
     __non_exhaustive: (),
 }
@@ -43,6 +49,13 @@ pub struct Book {
 impl Book {
     pub fn new() -> Self {
         Default::default()
+    }
+
+    /// Get a depth-first iterator over the items in the book.
+    pub fn iter(&self) -> BookItems<'_> {
+        BookItems {
+            items: self.chapters.iter().collect(),
+        }
     }
 }
 
@@ -66,5 +79,15 @@ impl Chapter {
     }
 }
 
+/// A depth-first iterator over the items in a book.
+pub struct BookItems<'a> {
+    items: VecDeque<&'a Chapter>,
+}
 
+impl<'a> Iterator for BookItems<'a> {
+    type Item = &'a Chapter;
 
+    fn next(&mut self) -> Option<Self::Item> {
+        self.items.pop_front()
+    }
+}

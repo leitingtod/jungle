@@ -6,7 +6,7 @@ use clap::ArgMatches;
 pub mod init;
 pub mod build;
 
-fn get_book_dir(args: &ArgMatches) -> PathBuf {
+fn get_root_dir(args: &ArgMatches) -> PathBuf {
     if let Some(dir) = args.value_of("dir") {
         // Check if path is relative from current dir, or absolute...
         let p = Path::new(dir);
